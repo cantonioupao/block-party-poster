@@ -192,9 +192,10 @@ export default function BlockPartyPoster() {
         <button onClick={nextAnimation} className="text-green-500 hover:text-green-300 mb-4">
           <ChevronDown size={48} />
         </button>
-        <button onClick={handleVideoExport} className="text-blue-500 hover:text-blue-300">
+{/*   <button onClick={handleVideoExport} className="text-blue-500 hover:text-blue-300">
           <Video size={48} />
-        </button>
+        </button> 
+*/}
       </div>
     </div>
   );
