@@ -51,19 +51,19 @@ export default function BlockPartyPoster() {
 
   const startAudio = () => {
     if (audioRef.current && !audioStarted) {
-      audioRef.current.volume = 0.1; // Start with volume at 0.1
-      audioRef.current.loop = true; // Enable looping
+      audioRef.current.volume = 0.1;
+      audioRef.current.loop = true;
       audioRef.current.play().catch(error => console.error("Audio playback failed:", error));
       setAudioStarted(true);
 
       let volume = 0.1;
       volumeIntervalRef.current = setInterval(() => {
-        volume = Math.min(volume + 0.05, 0.8); // Increase by 0.05 every 2 seconds, max 0.8
+        volume = Math.min(volume + 0.05, 0.8);
         if (audioRef.current) {
           audioRef.current.volume = volume;
         }
         if (volume >= 0.8) {
-          clearInterval(volumeIntervalRef.current); // Stop increasing when we reach 0.8
+          clearInterval(volumeIntervalRef.current);
         }
       }, 2000);
     }
@@ -106,7 +106,6 @@ export default function BlockPartyPoster() {
   return (
     <div className="flex flex-col h-screen bg-black">
       <div className="flex-grow flex flex-col">
-        {/* Audio element */}
         <audio ref={audioRef}>
           <source src="/song.mp3" type="audio/mpeg" />
           Your browser does not support the audio element.
@@ -123,9 +122,9 @@ export default function BlockPartyPoster() {
             
             {/* Poster Content */}
             <div className="relative z-10 flex flex-col justify-between h-full text-white p-2 sm:p-4 overflow-y-auto">
-              <div className="text-center mb-1 sm:mb-4">
-                <h1 className={`text-4xl sm:text-4xl md:text-6xl font-extrabold mb-1 sm:mb-2 ${animate ? animation : ''}`}>
-                  <span className="block mb-0 sm:mb-1" style={{
+              <div className="text-center sm:mb-4 absolute inset-x-0 top-1/4 sm:relative sm:top-0 transform -translate-y-1/2 sm:transform-none">
+                <h1 className={`text-5xl sm:text-4xl md:text-6xl font-extrabold mb-2 sm:mb-2 ${animate ? animation : ''}`}>
+                  <span className="block mb-1 sm:mb-1" style={{
                     color: theme.demolition,
                     textShadow: `0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px ${theme.demolition}, 0 0 20px ${theme.demolition}, 0 0 30px ${theme.demolition}, 0 0 40px ${theme.demolition}`
                   }}>
@@ -138,7 +137,7 @@ export default function BlockPartyPoster() {
                     PARTY
                   </span>
                 </h1>
-                <p className="text-lg sm:text-xl md:text-3xl italic" style={{
+                <p className="text-2xl sm:text-xl md:text-3xl italic" style={{
                   color: theme.subtitle,
                   textShadow: `0 0 5px ${theme.subtitle}, 0 0 10px ${theme.subtitle}`
                 }}>
@@ -146,7 +145,7 @@ export default function BlockPartyPoster() {
                 </p>
               </div>
               
-              <div className="text-center">
+              <div className="text-center mt-auto">
                 <div className="bg-black bg-opacity-60 p-2 sm:p-3 rounded-lg mb-1 sm:mb-3 w-full">
                   <p className="text-sm sm:text-base md:text-xl mb-0.5 sm:mb-1">
                     <span className="font-bold" style={{color: theme.emphasis}}>Date:</span> 12/10/2024, Saturday
