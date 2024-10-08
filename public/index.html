@@ -11,16 +11,16 @@
     <!-- Open Graph Meta Tags for Social Media (Instagram, Facebook, etc.) -->
     <meta property="og:title" content="Demolition Party" />
     <meta property="og:description" content="Join us for the ultimate block party - Demolition Party!" />
-    <meta property="og:image" content="https://67054c80602d362298b48d60--fluffy-brioche-7b7b52.netlify.app/block-party-background.png" />
-    <meta property="og:url" content="https://67054c80602d362298b48d60--fluffy-brioche-7b7b52.netlify.app/" />
+    <meta property="og:image" content="%PUBLIC_URL%/block-party-background.png" />
+    <meta property="og:url" content="" id="og-url" />
     <meta property="og:type" content="website" />
     
     <!-- Twitter Card Meta Tags (Optional) -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Demolition Party" />
     <meta name="twitter:description" content="Join us for the ultimate block party - Demolition Party!" />
-    <meta name="twitter:image" content="https://67054c80602d362298b48d60--fluffy-brioche-7b7b52.netlify.app/block-party-background.png" />
-    <meta name="twitter:url" content="https://67054c80602d362298b48d60--fluffy-brioche-7b7b52.netlify.app/" />
+    <meta name="twitter:image" content="%PUBLIC_URL%/block-party-background.png" />
+    <meta name="twitter:url" content="" id="twitter-url" />
 
     <!-- Web Manifest and Other Meta Tags -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -30,7 +30,14 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    
+
+    <script>
+      // Set the current URL dynamically for Open Graph and Twitter Card
+      const currentUrl = window.location.href;
+      document.getElementById('og-url').setAttribute('content', currentUrl);
+      document.getElementById('twitter-url').setAttribute('content', currentUrl);
+    </script>
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
