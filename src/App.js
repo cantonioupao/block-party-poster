@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Video } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
 
 const colorThemes = [
   {
@@ -36,10 +36,7 @@ export default function BlockPartyPoster() {
   const [currentTheme, setCurrentTheme] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState(0);
   const [animate, setAnimate] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
   const contentRef = useRef(null);
-  const mediaRecorderRef = useRef(null);
-  const chunksRef = useRef([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,85 +63,27 @@ export default function BlockPartyPoster() {
     setCurrentAnimation((prev) => (prev - 1 + animations.length) % animations.length);
   };
 
-  const handleVideoExport = async () => {
-    if (isRecording) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-    } else {
-      chunksRef.current = [];
-      try {
-        const stream = await navigator.mediaDevices.getDisplayMedia({
-          video: {
-            displaySurface: "browser",
-            frameRate: 60,
-            width: { ideal: 3840 },
-            height: { ideal: 2160 }
-          },
-          audio: false
-        });
-
-        mediaRecorderRef.current = new MediaRecorder(stream, {
-          mimeType: 'video/webm; codecs=vp9',
-          videoBitsPerSecond: 50000000 // 50 Mbps for ultra high quality
-        });
-
-        mediaRecorderRef.current.ondataavailable = (event) => {
-          if (event.data.size > 0) {
-            chunksRef.current.push(event.data);
-          }
-        };
-
-        mediaRecorderRef.current.onstop = () => {
-          const blob = new Blob(chunksRef.current, { type: 'video/webm' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          document.body.appendChild(a);
-          a.style = 'display: none';
-          a.href = url;
-          a.download = 'block-party-poster-ultra-hd.webm';
-          a.click();
-          window.URL.revokeObjectURL(url);
-          stream.getTracks().forEach(track => track.stop());
-        };
-
-        mediaRecorderRef.current.start();
-        setIsRecording(true);
-
-        // Stop recording after 10 seconds
-        setTimeout(() => {
-          if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-            mediaRecorderRef.current.stop();
-            setIsRecording(false);
-          }
-        }, 10000);
-
-      } catch (err) {
-        console.error("Error: " + err);
-      }
-    }
-  };
-
   const theme = colorThemes[currentTheme];
   const animation = animations[currentAnimation];
 
   return (
-    <div className="flex h-screen bg-black">
-      <div className="w-1/6 flex flex-col items-center justify-center">
-        <button onClick={prevTheme} className="text-white hover:text-gray-300 mb-4">
-          <ChevronLeft size={48} />
+    <div className="flex flex-col md:flex-row h-screen bg-black">
+      <div className="w-full md:w-1/6 flex flex-row md:flex-col items-center justify-center p-4">
+        <button onClick={prevTheme} className="text-white hover:text-gray-300 mr-4 md:mr-0 md:mb-4">
+          <ChevronLeft size={32} />
         </button>
         <button onClick={prevAnimation} className="text-green-500 hover:text-green-300">
-          <ChevronUp size={48} />
+          <ChevronUp size={32} />
         </button>
       </div>
-      <div className="w-2/3 relative" ref={contentRef}>
+      <div className="w-full md:w-2/3 relative flex flex-col" ref={contentRef}>
         <div className="absolute inset-0 bg-cover bg-center"
              style={{backgroundImage: "url('/block-party-background.png')", backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}>
         </div>
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div className="relative z-10 h-full flex flex-col justify-between items-center text-center text-white p-8">
-          <div className="mt-4">
-            <h1 className={`text-7xl font-extrabold mb-2 ${animate ? animation : ''}`}>
+        <div className="relative z-10 flex flex-col h-full text-white p-4 md:p-8">
+          <div className="text-center mb-8 md:mb-16">
+            <h1 className={`text-4xl md:text-7xl font-extrabold mb-2 ${animate ? animation : ''}`}>
               <span className="block mb-2" style={{
                 color: theme.demolition,
                 textShadow: `0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px ${theme.demolition}, 0 0 20px ${theme.demolition}, 0 0 30px ${theme.demolition}, 0 0 40px ${theme.demolition}`
@@ -158,44 +97,45 @@ export default function BlockPartyPoster() {
                 PARTY
               </span>
             </h1>
-            <p className="text-3xl italic mb-8" style={{
+            <p className="text-xl md:text-3xl italic" style={{
               color: theme.subtitle,
               textShadow: `0 0 5px ${theme.subtitle}, 0 0 10px ${theme.subtitle}`
             }}>
               "Our Block's Last Dance"
             </p>
           </div>
-
-          <div className="mb-8">
-            <div className="bg-black bg-opacity-60 p-6 rounded-lg mb-6 max-w-md">
-              <p className="text-2xl mb-3">
+          
+          <div className="flex-grow"></div>
+          
+          <div className="text-center">
+            <div className="bg-black bg-opacity-60 p-4 md:p-6 rounded-lg mb-4 inline-block">
+              <p className="text-lg md:text-2xl mb-2">
                 <span className="font-bold" style={{color: theme.emphasis}}>Date:</span> 12/10/2024, Saturday
               </p>
-              <p className="text-2xl mb-3">
+              <p className="text-lg md:text-2xl mb-2">
                 <span className="font-bold" style={{color: theme.emphasis}}>Time:</span> 21:00
               </p>
-              <p className="text-2xl mb-4">
+              <p className="text-lg md:text-2xl mb-3">
                 <span className="font-bold" style={{color: theme.emphasis}}>Location:</span> Kornhausstrasse 50, 8006 Zurich
               </p>
-              <p className="text-xl py-2 px-4 rounded" style={{backgroundColor: theme.emphasis, color: 'black'}}>
+              <p className="text-md md:text-xl py-2 px-4 rounded inline-block" style={{backgroundColor: theme.emphasis, color: 'black'}}>
                 Top Floor
               </p>
             </div>
-            <p className="text-xl">#ZurichFinalBeat #DanceTillDemolition</p>
+            <p className="text-lg md:text-xl mb-2">#ZurichFinalBeat #DanceTillDemolition</p>
+            <p className="text-xl md:text-2xl font-bold" style={{color: theme.emphasis}}>
+              Bring Your Own Drinks!
+            </p>
           </div>
         </div>
       </div>
-      <div className="w-1/6 flex flex-col items-center justify-center">
-        <button onClick={nextTheme} className="text-white hover:text-gray-300 mb-4">
-          <ChevronRight size={48} />
+      <div className="w-full md:w-1/6 flex flex-row md:flex-col items-center justify-center p-4">
+        <button onClick={nextTheme} className="text-white hover:text-gray-300 mr-4 md:mr-0 md:mb-4">
+          <ChevronRight size={32} />
         </button>
-        <button onClick={nextAnimation} className="text-green-500 hover:text-green-300 mb-4">
-          <ChevronDown size={48} />
+        <button onClick={nextAnimation} className="text-green-500 hover:text-green-300">
+          <ChevronDown size={32} />
         </button>
-{/*   <button onClick={handleVideoExport} className="text-blue-500 hover:text-blue-300">
-          <Video size={48} />
-        </button> 
-*/}
       </div>
     </div>
   );
