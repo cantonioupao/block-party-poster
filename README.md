@@ -1,10 +1,10 @@
-# Demolition Party Poster Generator
+# Party Poster Generator
 
 ## Overview
 
-The Demolition Party Poster Generator is an interactive React application that allows users to create customizable posters for a "demolition party" event. Users can switch between different color themes and animation styles, and download the final poster as a PNG image suitable for Instagram stories.
+The Party Poster Generator is an interactive React application that allows users to create customizable posters for a "demolition party" event. Users can switch between different color themes and animation styles, and download the final poster as a PNG image suitable for Instagram stories.
 
-![Poster Preview](https://67054c80602d362298b48d60--fluffy-brioche-7b7b52.netlify.app/preview.png)
+![Poster Preview](public/preview.png)
 
 ## Features
 
