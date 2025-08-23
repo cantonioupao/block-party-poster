@@ -38,6 +38,9 @@ export default function TwinsPartyPoster() {
   const volumeIntervalRef = useRef(null);
 
   useEffect(() => {
+    // Set the page title
+    document.title = "Twins Party";
+    
     const interval = setInterval(() => {
       setAnimate(true);
       setTimeout(() => setAnimate(false), 1000);
@@ -47,22 +50,45 @@ export default function TwinsPartyPoster() {
   }, []);
 
   const startAudio = () => {
+    console.log("startAudio called, audioStarted:", audioStarted);
     if (audioRef.current && !audioStarted) {
+      console.log("Audio element found, attempting to play...");
       audioRef.current.volume = 0.1;
       audioRef.current.loop = true;
-      audioRef.current.play().catch(error => console.error("Audio playback failed:", error));
-      setAudioStarted(true);
+      audioRef.current.currentTime = 0; // Start from beginning
+      
+      // Try to play the audio
+      const playPromise = audioRef.current.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log("Audio started successfully!");
+            setAudioStarted(true);
 
-      let volume = 0.1;
-      volumeIntervalRef.current = setInterval(() => {
-        volume = Math.min(volume + 0.05, 0.8);
-        if (audioRef.current) {
-          audioRef.current.volume = volume;
-        }
-        if (volume >= 0.8) {
-          clearInterval(volumeIntervalRef.current);
-        }
-      }, 2000);
+            // Gradually increase volume
+            let volume = 0.1;
+            volumeIntervalRef.current = setInterval(() => {
+              volume = Math.min(volume + 0.05, 0.8);
+              if (audioRef.current) {
+                audioRef.current.volume = volume;
+                console.log("Volume increased to:", volume);
+              }
+              if (volume >= 0.8) {
+                clearInterval(volumeIntervalRef.current);
+                console.log("Volume fade-in complete");
+              }
+            }, 2000);
+          })
+          .catch(error => {
+            console.error("Audio playback failed:", error);
+            console.log("Audio file path:", audioRef.current?.src);
+            console.log("Audio ready state:", audioRef.current?.readyState);
+            console.log("Audio network state:", audioRef.current?.networkState);
+          });
+      }
+    } else {
+      console.log("Audio not started - audioRef:", !!audioRef.current, "audioStarted:", audioStarted);
     }
   };
 
@@ -79,7 +105,8 @@ export default function TwinsPartyPoster() {
 
   const openInvitation = () => {
     setIsOpened(true);
-    startAudio();
+    // Ensure audio starts immediately when invitation opens
+    setTimeout(() => startAudio(), 100);
   };
 
   const nextTheme = () => {
@@ -297,6 +324,11 @@ export default function TwinsPartyPoster() {
             />
           </div>
         </div>
+        
+        {/* Hidden audio element for preloading */}
+        <audio ref={audioRef} preload="auto">
+          <source src="/bunny_song.mp3" type="audio/mpeg" />
+        </audio>
       </div>
     );
   }
@@ -454,7 +486,7 @@ export default function TwinsPartyPoster() {
       `}</style>
       
       <div className="flex-grow flex flex-col">
-        <audio ref={audioRef}>
+        <audio ref={audioRef} preload="auto">
           <source src="/bunny_song.mp3" type="audio/mpeg" />
         </audio>
 
