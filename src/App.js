@@ -455,7 +455,7 @@ export default function TwinsPartyPoster() {
       
       <div className="flex-grow flex flex-col">
         <audio ref={audioRef}>
-          <source src="public/bunny_song.mp3" type="audio/mpeg" />
+          <source src="/bunny_song.mp3" type="audio/mpeg" />
         </audio>
 
         {/* Poster Container */}
