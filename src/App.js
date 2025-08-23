@@ -28,7 +28,7 @@ const animationStyles = [
   { name: 'Spin Festival', titleAnimation: 'animate-spin' }
 ];
 
-export default function BlockPartyPoster() {
+export default function TwinsPartyPoster() {
   const [currentTheme, setCurrentTheme] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState(0);
   const [animate, setAnimate] = useState(false);
@@ -109,65 +109,192 @@ export default function BlockPartyPoster() {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black">
         <style jsx>{`
-          @keyframes phoneVibrate {
-            0% { transform: translateX(0); }
-            10% { transform: translateX(-3px) rotate(-1deg); }
-            20% { transform: translateX(3px) rotate(1deg); }
-            30% { transform: translateX(-3px) rotate(-1deg); }
-            40% { transform: translateX(3px) rotate(1deg); }
-            50% { transform: translateX(-2px) rotate(-0.5deg); }
-            60% { transform: translateX(2px) rotate(0.5deg); }
-            70% { transform: translateX(-1px) rotate(-0.3deg); }
-            80% { transform: translateX(1px) rotate(0.3deg); }
-            90% { transform: translateX(-1px) rotate(-0.1deg); }
-            100% { transform: translateX(0) rotate(0deg); }
+          @keyframes intenseBounce {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            10% { transform: translateY(-8px) translateX(-4px) rotate(-2deg) scale(1.05); }
+            20% { transform: translateY(-12px) translateX(6px) rotate(3deg) scale(1.08); }
+            30% { transform: translateY(-6px) translateX(-3px) rotate(-2deg) scale(1.03); }
+            40% { transform: translateY(-10px) translateX(5px) rotate(2.5deg) scale(1.06); }
+            50% { transform: translateY(-4px) translateX(-2px) rotate(-1deg) scale(1.02); }
+            60% { transform: translateY(-8px) translateX(4px) rotate(2deg) scale(1.04); }
+            70% { transform: translateY(-3px) translateX(-2px) rotate(-1.5deg) scale(1.01); }
+            80% { transform: translateY(-6px) translateX(3px) rotate(1deg) scale(1.03); }
+            90% { transform: translateY(-2px) translateX(-1px) rotate(-0.5deg) scale(1.01); }
+          }
+          
+          @keyframes pulseGlow {
+            0%, 100% { 
+              filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.8)) drop-shadow(0 0 25px rgba(168, 85, 247, 0.4));
+              transform: scale(1);
+            }
+            50% { 
+              filter: drop-shadow(0 0 30px rgba(59, 130, 246, 1)) drop-shadow(0 0 50px rgba(168, 85, 247, 0.7)) drop-shadow(0 0 70px rgba(34, 197, 94, 0.5));
+              transform: scale(1.1);
+            }
           }
           
           .vibrating-ball {
-            animation: phoneVibrate 0.8s ease-in-out infinite;
+            animation: intenseBounce 1.2s ease-in-out infinite, pulseGlow 2s ease-in-out infinite;
           }
           
-          .ripple {
-            animation: rippleEffect 2s ease-out infinite;
-          }
-          
-          @keyframes rippleEffect {
+          @keyframes rippleWave {
             0% {
               transform: scale(0.8);
-              opacity: 0.8;
+              opacity: 0.9;
+              border-width: 2px;
             }
-            50% {
-              transform: scale(1.2);
-              opacity: 0.4;
+            30% {
+              transform: scale(1.4);
+              opacity: 0.6;
+              border-width: 4px;
+            }
+            70% {
+              transform: scale(2.2);
+              opacity: 0.3;
+              border-width: 2px;
             }
             100% {
-              transform: scale(1.8);
+              transform: scale(3);
+              opacity: 0;
+              border-width: 1px;
+            }
+          }
+          
+          .ripple-ring {
+            position: absolute;
+            border: 2px solid rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            animation: rippleWave 3s ease-out infinite;
+          }
+          
+          .ripple-ring:nth-child(2) { animation-delay: -0.8s; }
+          .ripple-ring:nth-child(3) { animation-delay: -1.6s; }
+          .ripple-ring:nth-child(4) { animation-delay: -2.4s; }
+          
+          @keyframes floatingParticles {
+            0% { 
+              transform: translateY(0) rotate(0deg);
+              opacity: 0;
+            }
+            10% {
+              opacity: 0.8;
+            }
+            90% {
+              opacity: 0.2;
+            }
+            100% {
+              transform: translateY(-120px) rotate(360deg);
               opacity: 0;
             }
           }
+          
+          .floating-particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatingParticles 4s ease-out infinite;
+          }
+          
+          .floating-particle:nth-child(2) { animation-delay: -0.5s; left: 20%; }
+          .floating-particle:nth-child(3) { animation-delay: -1s; left: 80%; }
+          .floating-particle:nth-child(4) { animation-delay: -1.5s; left: 40%; }
+          .floating-particle:nth-child(5) { animation-delay: -2s; left: 60%; }
+          .floating-particle:nth-child(6) { animation-delay: -2.5s; left: 10%; }
+          .floating-particle:nth-child(7) { animation-delay: -3s; left: 90%; }
         `}</style>
         
         <div 
-          className="relative cursor-pointer transition-all duration-300 hover:scale-110 group"
+          className="relative cursor-pointer transition-all duration-300 hover:scale-125 group"
           onClick={openInvitation}
         >
-          {/* Simple Vibrating Image */}
-          <div className="vibrating-ball relative">
+          {/* Ripple Rings */}
+          <div className="ripple-ring" style={{
+            left: '50%',
+            top: '50%',
+            width: '160px',
+            height: '160px',
+            marginLeft: '-80px',
+            marginTop: '-80px'
+          }}></div>
+          <div className="ripple-ring" style={{
+            left: '50%',
+            top: '50%',
+            width: '160px',
+            height: '160px',
+            marginLeft: '-80px',
+            marginTop: '-80px',
+            borderColor: 'rgba(168, 85, 247, 0.5)'
+          }}></div>
+          <div className="ripple-ring" style={{
+            left: '50%',
+            top: '50%',
+            width: '160px',
+            height: '160px',
+            marginLeft: '-80px',
+            marginTop: '-80px',
+            borderColor: 'rgba(34, 197, 94, 0.4)'
+          }}></div>
+          <div className="ripple-ring" style={{
+            left: '50%',
+            top: '50%',
+            width: '160px',
+            height: '160px',
+            marginLeft: '-80px',
+            marginTop: '-80px',
+            borderColor: 'rgba(251, 191, 36, 0.3)'
+          }}></div>
+          
+          {/* Floating Particles */}
+          <div className="floating-particle" style={{
+            width: '6px',
+            height: '6px',
+            backgroundColor: 'rgba(59, 130, 246, 0.8)',
+            left: '30%',
+            top: '100%'
+          }}></div>
+          <div className="floating-particle" style={{
+            width: '4px',
+            height: '4px',
+            backgroundColor: 'rgba(168, 85, 247, 0.7)',
+            top: '100%'
+          }}></div>
+          <div className="floating-particle" style={{
+            width: '5px',
+            height: '5px',
+            backgroundColor: 'rgba(34, 197, 94, 0.6)',
+            top: '100%'
+          }}></div>
+          <div className="floating-particle" style={{
+            width: '3px',
+            height: '3px',
+            backgroundColor: 'rgba(251, 191, 36, 0.8)',
+            top: '100%'
+          }}></div>
+          <div className="floating-particle" style={{
+            width: '7px',
+            height: '7px',
+            backgroundColor: 'rgba(239, 68, 68, 0.7)',
+            top: '100%'
+          }}></div>
+          <div className="floating-particle" style={{
+            width: '4px',
+            height: '4px',
+            backgroundColor: 'rgba(59, 130, 246, 0.6)',
+            top: '100%'
+          }}></div>
+          <div className="floating-particle" style={{
+            width: '5px',
+            height: '5px',
+            backgroundColor: 'rgba(168, 85, 247, 0.5)',
+            top: '100%'
+          }}></div>
+
+          {/* Main Vibrating Image */}
+          <div className="vibrating-ball relative z-10">
             <img 
               src="https://i.ibb.co/YFfBSrNq/1000043595-removebg-preview.png"
               alt="Profile"
               className="w-32 h-auto max-w-none drop-shadow-2xl"
-              style={{
-                filter: 'drop-shadow(0 0 15px rgba(59, 130, 246, 0.8))'
-              }}
             />
-          </div>
-          
-          {/* Subtle Text Hint */}
-          <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 text-center">
-            <p className="text-sm text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              Tap to open
-            </p>
           </div>
         </div>
       </div>
@@ -211,12 +338,124 @@ export default function BlockPartyPoster() {
         .mild-bubble:nth-child(6n) { animation-delay: -1s; }
         .mild-bubble:nth-child(7n) { animation-delay: -9s; }
         .mild-bubble:nth-child(8n) { animation-delay: -14s; }
+        .mild-bubble:nth-child(9n) { animation-delay: -2s; }
+        .mild-bubble:nth-child(10n) { animation-delay: -5s; }
+        .mild-bubble:nth-child(11n) { animation-delay: -8s; }
+        .mild-bubble:nth-child(12n) { animation-delay: -11s; }
+        .mild-bubble:nth-child(13n) { animation-delay: -15s; }
+        .mild-bubble:nth-child(14n) { animation-delay: -18s; }
+        .mild-bubble:nth-child(15n) { animation-delay: -4s; }
+        .mild-bubble:nth-child(16n) { animation-delay: -6s; }
+        .mild-bubble:nth-child(17n) { animation-delay: -10s; }
+        .mild-bubble:nth-child(18n) { animation-delay: -13s; }
+        .mild-bubble:nth-child(19n) { animation-delay: -17s; }
+        .mild-bubble:nth-child(20n) { animation-delay: -19s; }
+        
+        @keyframes fireworkBurst {
+          0% {
+            transform: scale(0) rotate(0deg);
+            opacity: 1;
+          }
+          15% {
+            transform: scale(0.3) rotate(45deg);
+            opacity: 1;
+          }
+          30% {
+            transform: scale(0.8) rotate(90deg);
+            opacity: 0.9;
+          }
+          50% {
+            transform: scale(1.2) rotate(180deg);
+            opacity: 0.7;
+          }
+          70% {
+            transform: scale(1.5) rotate(270deg);
+            opacity: 0.4;
+          }
+          100% {
+            transform: scale(2) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes fireworkTrail {
+          0% {
+            transform: translateY(0) scale(0);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          50% {
+            transform: translateY(-50px) scale(0.5);
+            opacity: 0.8;
+          }
+          80% {
+            transform: translateY(-100px) scale(0.8);
+            opacity: 0.3;
+          }
+          100% {
+            transform: translateY(-150px) scale(1);
+            opacity: 0;
+          }
+        }
+        
+        .firework {
+          position: absolute;
+          pointer-events: none;
+        }
+        
+        .firework-burst {
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          animation: fireworkBurst 2s ease-out infinite;
+        }
+        
+        .firework-trail {
+          width: 2px;
+          height: 20px;
+          border-radius: 2px;
+          animation: fireworkTrail 1.5s ease-out infinite;
+        }
+        
+        .firework:nth-child(1) { 
+          top: 20%; left: 10%; 
+          animation-delay: 0s; 
+        }
+        .firework:nth-child(2) { 
+          top: 30%; left: 80%; 
+          animation-delay: -2s; 
+        }
+        .firework:nth-child(3) { 
+          top: 15%; left: 60%; 
+          animation-delay: -4s; 
+        }
+        .firework:nth-child(4) { 
+          top: 40%; left: 20%; 
+          animation-delay: -1s; 
+        }
+        .firework:nth-child(5) { 
+          top: 25%; left: 90%; 
+          animation-delay: -3s; 
+        }
+        .firework:nth-child(6) { 
+          top: 35%; left: 40%; 
+          animation-delay: -5s; 
+        }
+        .firework:nth-child(7) { 
+          top: 10%; left: 30%; 
+          animation-delay: -1.5s; 
+        }
+        .firework:nth-child(8) { 
+          top: 45%; left: 70%; 
+          animation-delay: -3.5s; 
+        }
       `}</style>
       
       <div className="flex-grow flex flex-col">
         <audio ref={audioRef}>
-          <source src="/birthday-music.mp3" type="audio/mpeg" />
-          Your browser does not support the audio element.
+          <source src="public/bunny_song.mp3" type="audio/mpeg" />
         </audio>
 
         {/* Poster Container */}
@@ -226,7 +465,7 @@ export default function BlockPartyPoster() {
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800"></div>
             
-            {/* Mild Gentle Bubbles Only */}
+            {/* Enhanced Bubbles Background */}
             <div className="mild-bubble" style={{
               left: '15%',
               width: '8px',
@@ -284,7 +523,127 @@ export default function BlockPartyPoster() {
               opacity: 0.17
             }}></div>
             
+            {/* Additional Bubbles for More Effect */}
+            <div className="mild-bubble" style={{
+              left: '10%',
+              width: '4px',
+              height: '4px',
+              backgroundColor: theme.twins,
+              opacity: 0.12
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '20%',
+              width: '7px',
+              height: '7px',
+              backgroundColor: theme.party,
+              opacity: 0.15
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '40%',
+              width: '5px',
+              height: '5px',
+              backgroundColor: theme.twins,
+              opacity: 0.13
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '50%',
+              width: '9px',
+              height: '9px',
+              backgroundColor: theme.party,
+              opacity: 0.16
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '70%',
+              width: '6px',
+              height: '6px',
+              backgroundColor: theme.twins,
+              opacity: 0.14
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '80%',
+              width: '8px',
+              height: '8px',
+              backgroundColor: theme.party,
+              opacity: 0.12
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '90%',
+              width: '4px',
+              height: '4px',
+              backgroundColor: theme.twins,
+              opacity: 0.15
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '12%',
+              width: '6px',
+              height: '6px',
+              backgroundColor: theme.party,
+              opacity: 0.11
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '32%',
+              width: '7px',
+              height: '7px',
+              backgroundColor: theme.twins,
+              opacity: 0.17
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '52%',
+              width: '5px',
+              height: '5px',
+              backgroundColor: theme.party,
+              opacity: 0.13
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '72%',
+              width: '8px',
+              height: '8px',
+              backgroundColor: theme.twins,
+              opacity: 0.14
+            }}></div>
+            <div className="mild-bubble" style={{
+              left: '92%',
+              width: '6px',
+              height: '6px',
+              backgroundColor: theme.party,
+              opacity: 0.12
+            }}></div>
+            
             <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+            
+            {/* Animated Fireworks */}
+            <div className="firework">
+              <div className="firework-trail" style={{backgroundColor: theme.twins}}></div>
+              <div className="firework-burst" style={{backgroundColor: theme.twins, boxShadow: `0 0 15px ${theme.twins}`}}></div>
+            </div>
+            <div className="firework">
+              <div className="firework-trail" style={{backgroundColor: theme.party}}></div>
+              <div className="firework-burst" style={{backgroundColor: theme.party, boxShadow: `0 0 15px ${theme.party}`}}></div>
+            </div>
+            <div className="firework">
+              <div className="firework-trail" style={{backgroundColor: '#ffd700'}}></div>
+              <div className="firework-burst" style={{backgroundColor: '#ffd700', boxShadow: '0 0 15px #ffd700'}}></div>
+            </div>
+            <div className="firework">
+              <div className="firework-trail" style={{backgroundColor: '#ff6b6b'}}></div>
+              <div className="firework-burst" style={{backgroundColor: '#ff6b6b', boxShadow: '0 0 15px #ff6b6b'}}></div>
+            </div>
+            <div className="firework">
+              <div className="firework-trail" style={{backgroundColor: '#4ecdc4'}}></div>
+              <div className="firework-burst" style={{backgroundColor: '#4ecdc4', boxShadow: '0 0 15px #4ecdc4'}}></div>
+            </div>
+            <div className="firework">
+              <div className="firework-trail" style={{backgroundColor: theme.twins}}></div>
+              <div className="firework-burst" style={{backgroundColor: theme.twins, boxShadow: `0 0 15px ${theme.twins}`}}></div>
+            </div>
+            <div className="firework">
+              <div className="firework-trail" style={{backgroundColor: '#ff69b4'}}></div>
+              <div className="firework-burst" style={{backgroundColor: '#ff69b4', boxShadow: '0 0 15px #ff69b4'}}></div>
+            </div>
+            <div className="firework">
+              <div className="firework-trail" style={{backgroundColor: theme.party}}></div>
+              <div className="firework-burst" style={{backgroundColor: theme.party, boxShadow: `0 0 15px ${theme.party}`}}></div>
+            </div>
             
             {/* Poster Content */}
             <div className="relative z-10 flex flex-col justify-between h-full text-white p-2 sm:p-4 overflow-y-auto">
