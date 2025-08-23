@@ -291,7 +291,7 @@ export default function TwinsPartyPoster() {
           {/* Main Vibrating Image */}
           <div className="vibrating-ball relative z-10">
             <img 
-              src="https://i.ibb.co/YFfBSrNq/1000043595-removebg-preview.png"
+              src="https://i.ibb.co/Gfb7cF7f/face.png"
               alt="Profile"
               className="w-32 h-auto max-w-none drop-shadow-2xl"
             />
